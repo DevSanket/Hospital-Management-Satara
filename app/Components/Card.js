@@ -1,18 +1,32 @@
-import { StyleSheet, Text, View,Image } from 'react-native'
+import { StyleSheet, Text, View,Image,TouchableOpacity } from 'react-native'
 import React from 'react'
 import colors from '../config/colors'
 import AppText from './AppText'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import IconButton from './IconButton';
+
 
 export default function Card({title,subtitle,image}) {
   return (
     <View style={styles.card}>
+    <View style={styles.firstContainer}>
+      <View style={styles.LogoContainer}>
       <Image
       style={styles.image} 
       source={image}
       />
-      <View style={styles.detailsContainer}>
-      <AppText style={styles.title}>{title}</AppText>
-      <AppText style={styles.subtitle}>{subtitle}</AppText>
+      </View>
+      <View style={styles.dataContainer}>
+          <AppText style={styles.patientAppText}>Name :- Sanket Sabale</AppText>
+          <AppText style={styles.patientAppText}>Contact No :- 8530730017</AppText>
+          <AppText style={styles.patientAppText}>Address :- At post shivthar tal dist satara 415011.</AppText>
+          <AppText style={styles.patientAppText}>Email :- sanketsabale9767@gmail.com</AppText>
+      </View>
+    </View>
+      <View style={styles.ButtonContainer}>
+        <IconButton name="check" />
+        <IconButton name="phone" />
+        <IconButton name="cancel" />
       </View>
     </View>
   )
@@ -26,12 +40,23 @@ const styles = StyleSheet.create({
         elevation:10,
         overflow:'hidden'
     },
-    image:{
-        width:"100%",
-        height: 200
+    firstContainer:{
+      width:"100%",   
+      height: 200,
+      flex:1,
+      flexDirection:'row'
     },
-    detailsContainer:{
-        padding:20
+    image:{
+      height:"90%",
+      width:"90%",
+      margin:10,
+      borderRadius:10,
+      alignSelf:'center'
+    },
+    ButtonContainer:{
+        padding:10,
+        flexDirection:'row',
+        justifyContent:'space-around'
     },
     title:{
         marginBottom : 7
@@ -39,5 +64,17 @@ const styles = StyleSheet.create({
     subtitle:{
         color:colors.secondary,
         fontWeight:'bold'
+    },
+    LogoContainer:{
+      width:"40%",
+      height:"100%"
+    },
+    dataContainer:{
+      flex:1,
+      justifyContent:'center'
+    },
+    patientAppText:{
+      fontSize:15,
+      margin:5
     }
 })
