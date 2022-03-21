@@ -4,10 +4,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../config/colors';
 
 
-export default function IconButton({name,onPress}) {
+export default function IconButton({name,onPress,style}) {
   return (
-    <TouchableOpacity style={styles.btn}>
-              <MaterialCommunityIcons name={name} size={30} />
+    <TouchableOpacity style={[styles.btn,style]}>
+              <MaterialCommunityIcons name={name} size={30} color="white" />
         </TouchableOpacity>
   )
 }

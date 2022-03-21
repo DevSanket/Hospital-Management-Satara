@@ -10,16 +10,10 @@ export default function HomeScreen() {
     <Screen style={styles.container}>
         <ScrollView>
             <Card image={require('../assets/jacket.jpg')}
-            title="Sanket"
-            subtitle="Hello I am Sanket"
-            />
-            <Card image={require('../assets/jacket.jpg')}
-            title="Sanket"
-            subtitle="Hello I am Sanket"
-            />
-            <Card image={require('../assets/jacket.jpg')}
-            title="Sanket"
-            subtitle="Hello I am Sanket"
+            name="Sanket Sabale"
+            email="sanketsabale9767@gmail.com"
+            disease="Fever"
+            phone_no="8530730017"
             />
         </ScrollView>
       <TouchableOpacity style={styles.profileButton} >

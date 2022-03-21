@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import IconButton from './IconButton';
 
 
-export default function Card({title,subtitle,image}) {
+export default function Card({name,disease,image,phone_no,email}) {
   return (
     <View style={styles.card}>
     <View style={styles.firstContainer}>
@@ -17,16 +17,16 @@ export default function Card({title,subtitle,image}) {
       />
       </View>
       <View style={styles.dataContainer}>
-          <AppText style={styles.patientAppText}>Name :- Sanket Sabale</AppText>
-          <AppText style={styles.patientAppText}>Contact No :- 8530730017</AppText>
-          <AppText style={styles.patientAppText}>Address :- At post shivthar tal dist satara 415011.</AppText>
-          <AppText style={styles.patientAppText}>Email :- sanketsabale9767@gmail.com</AppText>
+          <AppText style={styles.patientAppText}>Name :- {name}</AppText>
+          <AppText style={styles.patientAppText}>Contact No :- {phone_no}</AppText>
+          <AppText style={styles.patientAppText}>Disease :- {disease}.</AppText>
+          <AppText style={styles.patientAppText}>Email :- {email}</AppText>
       </View>
     </View>
       <View style={styles.ButtonContainer}>
-        <IconButton name="check" />
-        <IconButton name="phone" />
-        <IconButton name="cancel" />
+        <IconButton name="check"  style={{backgroundColor:'#34eb49'}}/>
+        <IconButton name="phone" style={{backgroundColor:'#34a8eb'}} />
+        <IconButton name="cancel" style={{backgroundColor:'#eb345f'}}/>
       </View>
     </View>
   )
