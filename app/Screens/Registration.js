@@ -1,9 +1,13 @@
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
-import React from "react";
+import { StyleSheet, Image, ScrollView } from "react-native";
+import React,{useState} from "react";
 import Screen from "../Components/Screen";
 import CategoryPickerItem from "../Components/CategoryPickerItem";
 import * as Yup from "yup";
-import { Form,FormField,SubmitButton,FormPicker as Picker,FormImagePicker} from '../Components/forms';
+import { Form,FormField,SubmitButton,FormPicker as Picker,FormImagePicker, ErrorMessage} from '../Components/forms';
+import colors from "../config/colors";
+import Firebase, { createHospitalProfile } from "../config/firebase";
+import useAuth from "../auth/useAuth";
+import ActivityIndicator from "../Components/ActivityIndicator";
 
 const categories = [
   {
@@ -54,7 +58,29 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Registration() {
+  const [error, setError] = useState(null);
+  const [loading,setLoading] = useState(false);
+
+
+  const auth = useAuth();
+
+  const HandleSubmit = async ({email,password,name,Contact_No,Address,Taluka,images}) => {
+    try {
+      setLoading(true);
+      const {user} = await Firebase.auth().createUserWithEmailAndPassword(email,password);
+      await createHospitalProfile(user,{name,Contact_No,Address,Taluka,images});
+      auth.logIn(user);
+      setLoading(false);
+    } catch (error) {
+      setError("An unexprected error occured");
+      console.log(error);
+      return;
+    }
+  }
+
   return (
+    <>
+    <ActivityIndicator  visible={loading}/>
     <Screen style={styles.container}>
       <ScrollView>
         <Image
@@ -71,10 +97,12 @@ export default function Registration() {
             email:'',
             password:''
           }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={HandleSubmit}
           validationSchema={validationSchema}
         >
+
           <FormImagePicker name="images" />
+          <ErrorMessage error={error}/>
           <FormField maxLength={255} name="name" placeholder="Hospital Name" />
           <FormField maxLength={255} name="email" placeholder="Hospital Email" />
           <FormField
@@ -104,6 +132,7 @@ export default function Registration() {
         </Form>
         </ScrollView>
     </Screen>
+    </>
   );
 }
 
@@ -111,7 +140,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection:"column",
-    padding:10
+    padding:10,
+    backgroundColor:colors.gray
   },
   logo: {
     height: 150,

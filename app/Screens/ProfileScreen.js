@@ -1,13 +1,21 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import React from "react";
+import React,{useState,useEffect} from "react";
 import Screen from "../Components/Screen";
 import ListItem from "../Components/ListItem";
 import colors from "../config/colors";
 import AppText from "../Components/AppText";
 import Divider from "../Components/Divider";
 import Icon from "../Components/Icon";
+import useAuth from "../auth/useAuth";
+
+
 
 export default function ProfileScreen() {
+  const {logOut,userData} = useAuth();
+ const {name,email} = JSON.parse(userData);
+
+  
+
   return (
     <Screen>
       <View style={styles.container}>
@@ -20,8 +28,8 @@ export default function ProfileScreen() {
             />
           </View>
           <View style={styles.profileDataContainer}>
-            <AppText>Mosh Hamedani</AppText>
-            <AppText>codewithmosh@gmail.com</AppText>
+            <AppText>{name}</AppText>
+            <AppText>{email}</AppText>
           </View>
         </View>
         <Divider />
@@ -53,6 +61,7 @@ export default function ProfileScreen() {
         <Divider />
         <ListItem
           title="Log Out"
+          onPress={() => logOut()}
           IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
         />
         <Divider />

@@ -5,7 +5,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Card from "../Components/Card";
 
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
   return (
     <Screen style={styles.container}>
         <ScrollView>
@@ -16,7 +16,9 @@ export default function HomeScreen() {
             phone_no="8530730017"
             />
         </ScrollView>
-      <TouchableOpacity style={styles.profileButton} >
+      <TouchableOpacity
+      onPress={() => navigation.navigate('Profile')}
+      style={styles.profileButton} >
         <AntDesign name="user" size={30} color="white"/>
       </TouchableOpacity>
     </Screen>

@@ -1,8 +1,12 @@
-import { StyleSheet, Text, View,Image } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View,Image,TouchableOpacity } from 'react-native'
+import React,{useState} from 'react'
 import Screen from '../Components/Screen'
-import { Form,FormField,SubmitButton } from '../Components/forms'
+import { ErrorMessage, Form,FormField,SubmitButton } from '../Components/forms'
 import * as Yup from "yup";
+import colors from '../config/colors';
+import firebase from '../config/firebase';
+import useAuth from '../auth/useAuth';
+import ActivityIndicator from '../Components/ActivityIndicator';
 
 
 const validationSchema = Yup.object().shape({
@@ -10,8 +14,32 @@ const validationSchema = Yup.object().shape({
  password: Yup.string().max(255).required('Password is required')
 })
 
-export default function LoginScreen() {
+
+
+
+export default function LoginScreen({navigation}) {
+  const [loginFailed, setLoginFailed] = useState(false);
+  const [loading,setLoading] = useState(false);
+
+  const auth = useAuth();
+  const handleSubmit = async ({email,password}) => {
+    try { 
+      setLoading(true);
+      const {user} = await firebase.auth().signInWithEmailAndPassword(email,password);
+      setLoginFailed(false);
+      auth.logIn(user);
+      setLoading(false);
+    } catch (error) {
+      console.log("Error While Login ",error);
+      return setLoginFailed(true);
+      
+    }
+      return;
+  }
+
   return (
+    <>
+    <ActivityIndicator visible={loading} />
     <Screen style={styles.container}>
         <Image
           style={styles.logo}
@@ -25,9 +53,10 @@ export default function LoginScreen() {
             }
         }
 
-        onSubmit={(values) => console.log(values)}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
         >
+          <ErrorMessage error="Invalid Email/password" visible={loginFailed} />
             <FormField 
                 maxLength={255}
                 name="email"
@@ -40,9 +69,13 @@ export default function LoginScreen() {
             />
             <SubmitButton title="Login" />
         </Form>
+        <TouchableOpacity style={styles.redirect} onPress={() => navigation.navigate('Register')}>
+                <Text>Not an Account?</Text>
+        </TouchableOpacity>
         <Text style={styles.text}>Forgot Password ? 
         Contact (sanketsabale9767@gmail.com)</Text>
     </Screen>
+    </>
   )
 }
 
@@ -51,7 +84,8 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        padding:10
+        padding:10,
+        backgroundColor:colors.gray
     },
     logo: {
         height: 150,
@@ -60,5 +94,9 @@ const styles = StyleSheet.create({
       },
       text:{
         textAlign:"center"
+      },
+      redirect:{
+        marginTop:10,
+        marginBottom:10
       }
 })
