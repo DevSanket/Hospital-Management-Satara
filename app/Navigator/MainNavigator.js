@@ -1,6 +1,9 @@
 import { createStackNavigator} from '@react-navigation/stack';
+import AppointmentHistory from '../Screens/AppointmentHistory';
+import CanceledAppointments from '../Screens/CanceledAppointments';
 import HomeScreen from '../Screens/HomeScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
+import RunningAppointments from '../Screens/RunningAppointments';
 
 
 const Stack = createStackNavigator();
@@ -13,5 +16,8 @@ export default MainNavigator = () => (
     }>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name='Profile' component={ProfileScreen} />
+        <Stack.Screen name="RunningAppointments" component={RunningAppointments} />
+        <Stack.Screen name='CanceledAppointments' component={CanceledAppointments} />
+        <Stack.Screen name="AppointMentHistory" component={AppointmentHistory} />
     </Stack.Navigator>
 )

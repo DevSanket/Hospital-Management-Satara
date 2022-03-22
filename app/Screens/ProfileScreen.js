@@ -10,7 +10,7 @@ import useAuth from "../auth/useAuth";
 
 
 
-export default function ProfileScreen() {
+export default function ProfileScreen({navigation}) {
   const {logOut,userData} = useAuth();
  const {name,email} = JSON.parse(userData);
 
@@ -35,6 +35,7 @@ export default function ProfileScreen() {
         <Divider />
         <ListItem
           title="Running Appointment"
+          onPress={() => navigation.navigate('RunningAppointments')}
           IconComponent={
             <Icon name="account-check" backgroundColor={colors.secondary} />
           }
@@ -42,6 +43,7 @@ export default function ProfileScreen() {
         <Divider />
         <ListItem
           title="Cancel Appointment"
+          onPress={() => navigation.navigate('CanceledAppointments')}
           IconComponent={
             <Icon name="account-cancel" backgroundColor={colors.danger} />
           }
@@ -49,6 +51,7 @@ export default function ProfileScreen() {
         <Divider />
         <ListItem
           title="Appointment History"
+          onPress={() => navigation.navigate('AppointMentHistory')}
           IconComponent={
             <Icon name="history" backgroundColor={colors.medium} />
           }

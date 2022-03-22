@@ -6,7 +6,6 @@ const storeData = async (user) => {
     try {
         await SecureStore.setItemAsync(key,user);
     } catch (error) {
-        console.log(result);
         console.log("Error While Storing the data",error);
     }
 }
