@@ -6,6 +6,7 @@ import Firebase from '../config/firebase';
 export default useAuth = () => {
     const {userData,setUserData} = useContext(AuthContext);
     const db = Firebase.firestore();
+    
 
     const logOut = () =>  {
         setUserData(null);
@@ -14,8 +15,9 @@ export default useAuth = () => {
 
     const logIn = (user) => {
         db.collection('hospitals').doc(user.uid).get()
-        .then(snapshot => setUserData(JSON.stringify(snapshot.data()))); 
-        authStorage.storeData(userData);
+         .then(snapshot => 
+        setUserData(snapshot.data())); 
+        authStorage.storeData(user);
     }
 
     return {userData,setUserData,logOut,logIn};

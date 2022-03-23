@@ -4,6 +4,7 @@ import colors from '../config/colors'
 import AppText from './AppText'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import IconButton from './IconButton';
+import { InsertImage } from '../config/firebase';
 
 
 export default function Card({name,disease,image,phone_no,email}) {

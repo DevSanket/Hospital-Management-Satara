@@ -7,12 +7,16 @@ import AppText from "../Components/AppText";
 import Divider from "../Components/Divider";
 import Icon from "../Components/Icon";
 import useAuth from "../auth/useAuth";
+import Firebase from "../config/firebase";
 
 
 
 export default function ProfileScreen({navigation}) {
+  
   const {logOut,userData} = useAuth();
- const {name,email} = JSON.parse(userData);
+  const {email,name} = userData;
+  // const {email,name} = data;
+
 
   
 

@@ -31,9 +31,9 @@ export default function LoginScreen({navigation}) {
       setLoading(false);
     } catch (error) {
       console.log("Error While Login ",error);
-      return setLoginFailed(true);
-      
+      return setLoginFailed(true); 
     }
+    setLoading(false);
       return;
   }
 

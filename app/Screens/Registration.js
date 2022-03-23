@@ -68,12 +68,13 @@ export default function Registration() {
     try {
       setLoading(true);
       const {user} = await Firebase.auth().createUserWithEmailAndPassword(email,password);
-      await createHospitalProfile(user,{name,Contact_No,Address,Taluka,images});
+      await createHospitalProfile(user,images,{name,Contact_No,Address,Taluka});
       auth.logIn(user);
       setLoading(false);
     } catch (error) {
       setError("An unexprected error occured");
       console.log(error);
+      setLoading(false);
       return;
     }
   }
