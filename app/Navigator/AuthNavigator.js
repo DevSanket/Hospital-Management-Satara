@@ -4,7 +4,7 @@ import Registration from '../Screens/Registration';
 
 const Stack = createStackNavigator();
 
-export default MainNavigator = () => (
+export default AuthNavigator = () => (
     <Stack.Navigator screenOptions={
         {
             headerShown:false

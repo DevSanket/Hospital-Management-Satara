@@ -3,9 +3,16 @@ import React from "react";
 import Screen from "../Components/Screen";
 import { AntDesign } from "@expo/vector-icons";
 import Card from "../Components/Card";
+import useAuth from "../auth/useAuth";
+import Firebase from "../config/firebase";
 
 
 export default function HomeScreen({navigation}) {
+  const {userData} = useAuth(); 
+
+
+  
+  
   return (
     <Screen style={styles.container}>
         <ScrollView>

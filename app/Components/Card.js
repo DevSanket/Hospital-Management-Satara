@@ -2,13 +2,27 @@ import { StyleSheet, Text, View,Image,TouchableOpacity } from 'react-native'
 import React from 'react'
 import colors from '../config/colors'
 import AppText from './AppText'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import IconButton from './IconButton';
-import { InsertImage } from '../config/firebase';
+import Firebase, { handleApprove } from '../config/firebase';
+import useAuth from '../auth/useAuth';
 
 
 export default function Card({name,disease,image,phone_no,email}) {
-  return (
+  const {userData} = useAuth();
+
+  const HandleCheck = () => {
+    const userRef = Firebase.firestore().collection('hospitals').doc(userData.id).collection('Running_Appointments');
+    try {
+      userRef.add({
+        name,email,disease,contact_no:phone_no
+      }).then(data => {
+        console.log("Data Saved Firebase Running Appoinment");
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  return ( 
     <View style={styles.card}>
     <View style={styles.firstContainer}>
       <View style={styles.LogoContainer}>
@@ -25,7 +39,7 @@ export default function Card({name,disease,image,phone_no,email}) {
       </View>
     </View>
       <View style={styles.ButtonContainer}>
-        <IconButton name="check"  style={{backgroundColor:'#34eb49'}}/>
+        <IconButton onPress={HandleCheck} name="check"  style={{backgroundColor:'#34eb49'}}/>
         <IconButton name="phone" style={{backgroundColor:'#34a8eb'}} />
         <IconButton name="cancel" style={{backgroundColor:'#eb345f'}}/>
       </View>
@@ -55,9 +69,9 @@ const styles = StyleSheet.create({
       alignSelf:'center'
     },
     ButtonContainer:{
-        padding:10,
+        margin:10,
         flexDirection:'row',
-        justifyContent:'space-around'
+        justifyContent:'space-between'
     },
     title:{
         marginBottom : 7

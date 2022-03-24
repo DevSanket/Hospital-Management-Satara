@@ -14,9 +14,20 @@ import Firebase from "../config/firebase";
 export default function ProfileScreen({navigation}) {
   
   const {logOut,userData} = useAuth();
-  const {email,name} = userData;
+  const {email,name,id,password} = userData;
   // const {email,name} = data;
+ 
 
+  const HandleDelete = async () => {
+    var user =  Firebase.auth().currentUser;
+    await user.delete().then(() => {
+      console.log('user Deleted');
+    }).catch(err => {
+      console.log(err);
+    });
+    console.log(user);  
+    // logOut();
+  }
 
   
 
@@ -64,6 +75,14 @@ export default function ProfileScreen({navigation}) {
         <ListItem
           title="About us"
           IconComponent={<Icon name="android" backgroundColor="#01F7CC" />}
+        />
+        <Divider />
+        <ListItem
+          title="Delete Hospital"
+          onPress={HandleDelete}
+          IconComponent={
+            <Icon name="delete" backgroundColor={colors.danger} />
+          }
         />
         <Divider />
         <ListItem

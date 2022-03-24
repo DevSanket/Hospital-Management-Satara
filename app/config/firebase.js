@@ -3,8 +3,6 @@ import 'firebase/compat/auth';
 import Constants  from 'expo-constants';
 import 'firebase/compat/firestore';
 import 'firebase/compat/storage';
-import uuid from 'uuid';
-import { ref } from 'yup';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -28,26 +26,14 @@ const firebaseConfig = {
     let newImages = [];
 
     for (let i = 0; i < Images.length; i++) {
-        const response = await fetch(Images[i]);
-        const blob = await response.blob();
-        const ref = Firebase.storage().ref().child(`hospitals/${Date.now()}`);
+        let response = await fetch(Images[i]);
+        let blob = await response.blob();
+        let ref = Firebase.storage().ref().child(`hospitals/${Date.now()}`);
         await (ref.put(blob)); 
-        const link = await ref.getDownloadURL();
+        let link = await ref.getDownloadURL();
         newImages.push(link);
     }
 
-    // Images.map(
-    //   async (Image) => {
-    //     const response = await fetch(Image);
-    //     const blob = await response.blob();
-    //     const ref = Firebase.storage().ref().child(`hospitals/${Date.now()}`);
-    //     await (ref.put(blob)); 
-    //     const link = await ref.getDownloadURL();
-      
-    //   }
-    // )
-
-    console.log(newImages);
     if(!snapshot.exists){
       const {email} = HospitalAuth;
       //formatting Date
@@ -76,4 +62,19 @@ const firebaseConfig = {
   }
 
 
+  export const handleApprove = (id,name,email,disease,contact_no) => {
+    const userRef = Firebase.firestore().collection('hospitals').doc(id).collection('Running_Appointments');
+
+   try {
+     userRef.add({
+       name,email,disease,contact_no
+     }).then(data => {
+       console.log("Data Saved Firebase Running Appoinment");
+     })
+   } catch (error) {
+     console.log(error);
+   }
+  }
   export default Firebase; 
+
+  

@@ -11,40 +11,48 @@ import ActivityIndicator from "../Components/ActivityIndicator";
 
 const categories = [
   {
-    label: "Furniture",
+    label: "karad",
     value: 1,
   },
   {
-    label: "Cars",
+    label: "Satara",
     value: 2,
   },
   {
-    label: "Cameras",
+    label: "Phaltan",
     value: 3,
   },
   {
-    label: "Games",
+    label: "Patan",
     value: 4,
   },
   {
-    label: "Clothing",
+    label: "Khatav",
     value: 5,
   },
   {
-    label: "Sports",
+    label: "Koregoan",
     value: 6,
   },
   {
-    label: "Movies & Music",
-    value: 7,
-  },
-  {
-    label: "Books",
+    label: "Man",
     value: 8,
   },
   {
-    label: "Other",
+    label: "Wai",
     value: 9,
+  },
+  {
+    label: "Khandala",
+    value: 10,
+  },
+  {
+    label: "Jaoli",
+    value: 11,
+  },
+  {
+    label: "Mahabaleshwar",
+    value: 12,
   },
 ];
 
@@ -68,7 +76,7 @@ export default function Registration() {
     try {
       setLoading(true);
       const {user} = await Firebase.auth().createUserWithEmailAndPassword(email,password);
-      await createHospitalProfile(user,images,{name,Contact_No,Address,Taluka});
+      await createHospitalProfile(user,images,{name,Contact_No,Address,Taluka,password});
       auth.logIn(user);
       setLoading(false);
     } catch (error) {

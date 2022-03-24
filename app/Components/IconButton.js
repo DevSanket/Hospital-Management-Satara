@@ -6,7 +6,7 @@ import colors from '../config/colors';
 
 export default function IconButton({name,onPress,style}) {
   return (
-    <TouchableOpacity style={[styles.btn,style]}>
+    <TouchableOpacity onPress={onPress} style={[styles.btn,style]}>
               <MaterialCommunityIcons name={name} size={30} color="white" />
         </TouchableOpacity>
   )
@@ -14,11 +14,11 @@ export default function IconButton({name,onPress,style}) {
 
 const styles = StyleSheet.create({
     btn:{
-        width:100,
         height:40,
+        width:100,
         justifyContent:'center',
         alignItems:'center',
         backgroundColor:colors.secondary,
-        borderRadius:5
+        borderRadius:5,
       }
 })
