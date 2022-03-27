@@ -17,8 +17,9 @@ export default function App() {
   const [isReady,setReady] = useState(false);
   const restoreUser = async () => {
     const user = await authStore.getData();
-    const {uid} = JSON.parse(user); 
+   
     if(user) {
+      const {uid} = JSON.parse(user); 
      await db.collection('hospitals').doc(uid).get()
       .then(snapshot => 
       setUserData(snapshot.data())); 

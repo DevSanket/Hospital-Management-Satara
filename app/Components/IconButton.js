@@ -13,12 +13,8 @@ export default function IconButton({name,onPress,style}) {
 }
 
 const styles = StyleSheet.create({
-    btn:{
-        height:40,
-        width:100,
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:colors.secondary,
-        borderRadius:5,
+    btn:{ 
+        padding:20,
+        borderRadius:50
       }
 })

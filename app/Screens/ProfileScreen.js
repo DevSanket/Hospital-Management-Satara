@@ -14,7 +14,7 @@ import Firebase from "../config/firebase";
 export default function ProfileScreen({navigation}) {
   
   const {logOut,userData} = useAuth();
-  const {email,name,id,password} = userData;
+  const {email,name,id,password,Images} = userData;
   // const {email,name} = data;
  
 
@@ -39,7 +39,7 @@ export default function ProfileScreen({navigation}) {
           <View style={styles.profileLogoContainer}>
             <Image
               style={styles.profileLogo}
-              source={require("../assets/mosh.jpg")}
+              source={{uri : Images[0]}}
             />
           </View>
           <View style={styles.profileDataContainer}>
@@ -55,14 +55,7 @@ export default function ProfileScreen({navigation}) {
             <Icon name="account-check" backgroundColor={colors.secondary} />
           }
         />
-        <Divider />
-        <ListItem
-          title="Cancel Appointment"
-          onPress={() => navigation.navigate('CanceledAppointments')}
-          IconComponent={
-            <Icon name="account-cancel" backgroundColor={colors.danger} />
-          }
-        />
+  
         <Divider />
         <ListItem
           title="Appointment History"

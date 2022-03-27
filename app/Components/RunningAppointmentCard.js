@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,Image,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View,Image,Linking } from 'react-native'
 import React from 'react'
 import colors from '../config/colors'
 import {Entypo} from '@expo/vector-icons'
@@ -6,58 +6,56 @@ import IconButton from './IconButton'
 
 
 
-export default function RunningAppointMentCard({name,disease,phone_no,email}) {
+export default function RunningAppointMentCard({name,disease,phone_no,email,HandleCheck}) {
+
+
   return (
    <View style={styles.Card}>
-        <View style={styles.historyCard}>
-      <View style={styles.Checklogo}>
-        <Entypo size={25} name="user" />
+
+     <View style={styles.dataMenu}>
+        <View style={styles.icon}> 
+        <Entypo  size={35} name="user" />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>Name :- {name}</Text> 
+           <Text style={styles.text}>Email :- {email} </Text>
+           <Text style={styles.text}>Contact No :- {phone_no}</Text>
+           <Text style={styles.text}>Disease :- {disease}</Text>
+        </View>
+     </View>
+     <View style={styles.ButtonContainer}>
+        <IconButton onPress={HandleCheck} name="check"  style={{backgroundColor:'#34eb49'}}/>
+        <IconButton onPress={() => Linking.openURL(`tel:${phone_no}`)} name="phone" style={{backgroundColor:'#34a8eb'}} />
       </View>
-      <View style={styles.Details}>
-           <Text>Name :- {name}</Text> 
-           <Text>Email :- {email}</Text>
-           <Text>Contact No :- {phone_no}</Text>
-           <Text>Disease :- {disease}</Text>
-      </View>
-    </View>
-    <View style={styles.ButtonContainer}>
-        <IconButton name="check"  style={{width:150,backgroundColor:'#34eb49'}}/>
-        <IconButton name="phone" style={{width:150,backgroundColor:'#34a8eb'}} />
-      </View>
-   </View>
+   </View> 
   )
 }
 
 const styles = StyleSheet.create({
     Card:{
-         padding:15,
+        padding:10,
         borderRadius:5,
         margin : 20,
         elevation:10,
         backgroundColor :colors.white,
+        overflow:'scroll'
     },
-    historyCard:{
-        flexDirection:'row',
-        justifyContent:'center',
-       
-        
+    dataMenu:{
+      flexDirection:'row',
+      justifyContent:'space-around',
+      marginBottom:10
     },
-    Checklogo:{
-        width:75,
-        backgroundColor:colors.gray,
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius:50
+    textContainer:{
+      flex:0.8
     },
-    Details:{
-        height:'100%',
-        marginLeft:30,
-        alignSelf:'flex-start',
-        textAlignVertical:'center'
+    icon:{
+      alignSelf:'center'
     },
     ButtonContainer:{
-        marginTop:10,
+      borderColor:"#000",
+      borderTopWidth:2,
+        padding:10,
         flexDirection:'row',
-        justifyContent:'space-between'
+        justifyContent:'space-around'
     },
 })

@@ -1,26 +1,39 @@
-import { StyleSheet, Text, View,Image,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View,Image,Linking,ToastAndroid } from 'react-native'
 import React from 'react'
 import colors from '../config/colors'
 import AppText from './AppText'
 import IconButton from './IconButton';
-import Firebase, { handleApprove } from '../config/firebase';
+import Firebase from '../config/firebase';
 import useAuth from '../auth/useAuth';
 
 
-export default function Card({name,disease,image,phone_no,email}) {
+
+
+export default function Card({name,disease,image,phone_no,email,id,navigation}) {
   const {userData} = useAuth();
 
-  const HandleCheck = () => {
+  const HandleCheck = async () => {
+    
     const userRef = Firebase.firestore().collection('hospitals').doc(userData.id).collection('Running_Appointments');
-    try {
+   
+    try{
       userRef.add({
-        name,email,disease,contact_no:phone_no
-      }).then(data => {
-        console.log("Data Saved Firebase Running Appoinment");
-      })
-    } catch (error) {
-      console.log(error);
+        name,
+        disease,
+        image,
+        phone_no,
+        email
+      });
+      console.log("added to database");
+    }catch(err){
+      console.log(err);
     }
+    HandleDelete();
+    navigation.navigate('RunningAppointments');
+  }
+
+  const HandleDelete = async () => {
+      await Firebase.firestore().collection('hospitals').doc(userData.id).collection('NewAppointments').doc(id).delete();
   }
   return ( 
     <View style={styles.card}>
@@ -28,7 +41,7 @@ export default function Card({name,disease,image,phone_no,email}) {
       <View style={styles.LogoContainer}>
       <Image
       style={styles.image} 
-      source={image}
+      source={{uri:image}}
       />
       </View>
       <View style={styles.dataContainer}>
@@ -40,8 +53,8 @@ export default function Card({name,disease,image,phone_no,email}) {
     </View>
       <View style={styles.ButtonContainer}>
         <IconButton onPress={HandleCheck} name="check"  style={{backgroundColor:'#34eb49'}}/>
-        <IconButton name="phone" style={{backgroundColor:'#34a8eb'}} />
-        <IconButton name="cancel" style={{backgroundColor:'#eb345f'}}/>
+        <IconButton onPress={() => Linking.openURL(`tel:${phone_no}`)}name="phone" style={{backgroundColor:'#34a8eb'}} />
+        <IconButton onPress={HandleDelete} name="cancel" style={{backgroundColor:'#eb345f'}}/>
       </View>
     </View>
   )
@@ -53,7 +66,7 @@ const styles = StyleSheet.create({
         backgroundColor :colors.white,
         margin : 20,
         elevation:10,
-        overflow:'hidden'
+        overflow:'hidden',
     },
     firstContainer:{
       width:"100%",   
