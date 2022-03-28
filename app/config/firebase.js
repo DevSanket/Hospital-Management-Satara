@@ -46,10 +46,6 @@ const firebaseConfig = {
           id:HospitalAuth.uid,
           email,
           createdAt,
-          NewAppointments:[],
-          RunningAppointments:[],
-          CanceledAppointments :[],
-          AppointmentsHistory:[],
           Images : newImages,
           ...additionalData
         });

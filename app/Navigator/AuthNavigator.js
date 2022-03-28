@@ -1,4 +1,5 @@
 import { createStackNavigator} from '@react-navigation/stack';
+import ForgotPassword from '../Screens/ForgotPassword';
 import LoginScreen from '../Screens/LoginScreen';
 import Registration from '../Screens/Registration';
 
@@ -12,5 +13,6 @@ export default AuthNavigator = () => (
     }>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name='Register' component={Registration} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
     </Stack.Navigator>
 )

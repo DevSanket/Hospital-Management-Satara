@@ -31,6 +31,7 @@ export default function LoginScreen({navigation}) {
       setLoading(false);
     } catch (error) {
       console.log("Error While Login ",error);
+      setLoading(false);
       return setLoginFailed(true); 
     }
     setLoading(false);
@@ -72,8 +73,9 @@ export default function LoginScreen({navigation}) {
         <TouchableOpacity style={styles.redirect} onPress={() => navigation.navigate('Register')}>
                 <Text>Not an Account?</Text>
         </TouchableOpacity>
-        <Text style={styles.text}>Forgot Password ? 
-        Contact (sanketsabale9767@gmail.com)</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+        <Text style={styles.text}>Forgot Password ?</Text>
+        </TouchableOpacity>
     </Screen>
     </>
   )

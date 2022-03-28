@@ -67,12 +67,13 @@ export default function ProfileScreen({navigation}) {
         <Divider />
         <ListItem
           title="About us"
+          onPress={() => navigation.navigate('Aboutus')}
           IconComponent={<Icon name="android" backgroundColor="#01F7CC" />}
         />
         <Divider />
         <ListItem
           title="Delete Hospital"
-          onPress={HandleDelete}
+          onPress={() => navigation.navigate('DeleteorUpdate')}
           IconComponent={
             <Icon name="delete" backgroundColor={colors.danger} />
           }

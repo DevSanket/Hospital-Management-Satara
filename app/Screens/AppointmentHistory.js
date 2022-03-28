@@ -41,7 +41,7 @@ export default function AppointmentHistory() {
             date={data.date.seconds}
             contact_no={data.contact_no}
             email={data.email}
-            />) :<Text>No Appointments!</Text>
+            />) :<Text style={styles.NoAppointments}>No Appointments!</Text>
         }
       </ScrollView>
     </Screen>
@@ -58,5 +58,9 @@ const styles = StyleSheet.create({
         fontSize:20,
         textTransform:"uppercase",
         padding:5
+    },
+    NoAppointments:{
+      textAlign:"center",
+      padding:15
     }
 })

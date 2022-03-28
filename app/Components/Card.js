@@ -24,7 +24,7 @@ export default function Card({name,disease,image,phone_no,email,id,navigation}) 
         phone_no,
         email
       });
-      console.log("added to database");
+      ToastAndroid.show("Data Added Successfully",ToastAndroid.SHORT);
     }catch(err){
       console.log(err);
     }
