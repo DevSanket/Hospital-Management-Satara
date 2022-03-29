@@ -14,7 +14,11 @@ export default function RunningAppointments() {
     const userRef = Firebase.firestore().collection('hospitals').doc(userData.id).collection('Appointments_History');
     try {
       await userRef.add({
-        name,email,disease,contact_no:phone_no,date: new Date()
+        name,
+        email,
+        disease,
+        contact_no:phone_no,
+        date: Date.now()
       }).then(data => {
         ToastAndroid.show("Appointment Added in History",ToastAndroid.SHORT);
         

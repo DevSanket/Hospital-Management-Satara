@@ -38,7 +38,7 @@ export default function AppointmentHistory() {
           Data.map(data => <HistoryCard
           key={data.id}
             name={data.name}
-            date={data.date.seconds}
+            date={data.date}
             contact_no={data.contact_no}
             email={data.email}
             />) :<Text style={styles.NoAppointments}>No Appointments!</Text>
