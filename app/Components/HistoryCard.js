@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react';
 import {Entypo} from '@expo/vector-icons'
 import colors from '../config/colors';
-import dateFormat from 'dateformat';
+
 
 export default function HistoryCard({name,email,contact_no,date}) {
   return (
@@ -16,7 +16,7 @@ export default function HistoryCard({name,email,contact_no,date}) {
           <Text style={styles.text}>Name :- {name}</Text> 
            <Text style={styles.text}>Email :- {email}</Text>
            <Text style={styles.text}>Contact No :- {contact_no}</Text>
-           <Text style={styles.text}>Date :- {dateFormat(Date(date),"dddd, mmmm dS, yyyy")}</Text>
+           <Text style={styles.text}>Date :- {date}</Text>
         </View>
      </View>
    </View> 

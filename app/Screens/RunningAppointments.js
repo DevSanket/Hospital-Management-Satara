@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View,ScrollView,ToastAndroid } from 'react-native'
+import { StyleSheet, Text, ScrollView,ToastAndroid } from 'react-native'
 import React,{useState,useEffect} from 'react'
 import Screen from '../Components/Screen'
 import useAuth from '../auth/useAuth'
 import Firebase from '../config/firebase';
 import RunningAppointMentCard from '../Components/RunningAppointmentCard';
+import dateFormat from 'dateformat';
 
 export default function RunningAppointments() {
   const {userData} = useAuth();
@@ -11,6 +12,7 @@ export default function RunningAppointments() {
   const db = Firebase.firestore();
 
   const HandleCheck = async (name,email,disease,phone_no,id) => {
+    const createdAt = new Date();
     const userRef = Firebase.firestore().collection('hospitals').doc(userData.id).collection('Appointments_History');
     try {
       await userRef.add({
@@ -18,7 +20,7 @@ export default function RunningAppointments() {
         email,
         disease,
         contact_no:phone_no,
-        date: Date.now()
+        date: dateFormat(new Date(),"mmmm dS, yyyy").toString()
       }).then(data => {
         ToastAndroid.show("Appointment Added in History",ToastAndroid.SHORT);
         
