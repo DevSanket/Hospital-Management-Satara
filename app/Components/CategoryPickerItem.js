@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import AppText from './AppText'
 
 export default function CategoryPickerItem({onPress,item}) {
   return (
-   <TouchableOpacity style={styles.container} onPress={onPress}>
-       <AppText style={styles.label}>{item.label}</AppText>
-   </TouchableOpacity>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
+        <AppText style={styles.label}>{item.label}</AppText>
+    </TouchableOpacity>
   )
 }
 

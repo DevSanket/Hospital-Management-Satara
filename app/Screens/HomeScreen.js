@@ -1,63 +1,70 @@
-import { StyleSheet, Text, View, TouchableOpacity,ScrollView } from "react-native";
-import React,{useEffect,useState} from "react";
-import Screen from "../Components/Screen";
+import { Button, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import useAuth from '../auth/useAuth'
+import Firebase from '../config/firebase';
+import ActivityIndicator from "../components/ActivityIndicator";
+import Screen from '../components/Screen';
+import AppText from '../components/AppText';
+import Card from '../components/Card';
 import { AntDesign } from "@expo/vector-icons";
-import Card from "../Components/Card";
-import useAuth from "../auth/useAuth";
-import Firebase from "../config/firebase";
-import AppText from "../Components/AppText";
-import ActivityIndicator from "../Components/ActivityIndicator";
 
 
 export default function HomeScreen({navigation}) {
-  const [Appointments,setAppointments] = useState([]);
+
+  const [appointments,setAppointments] = useState([]);
   const [loading,setLoading] = useState(false);
   const {userData} = useAuth();
-  const db = Firebase.firestore(); 
+  const db = Firebase.firestore();
+
 
   useEffect(() => {
     setLoading(true);
     db.collection('hospitals').doc(userData.id).collection('NewAppointments').onSnapshot(snapshot => {
       setAppointments(snapshot.docs.map(
-          doc => (
-              {
-              id:doc.id,
-              contact_no:doc.data().contact_no,
+        doc => (
+          { id:doc.id,
+             contact_no:doc.data().contact_no,
               disease:doc.data().disease,
               email:doc.data().email,
               name:doc.data().name,
-              image:doc.data().Image
-          })))
-  });
-  setLoading(false);
-  },[]);
+              image:doc.data().Image}
+        )
+      ))
+    })
+
+    setLoading(false);
+  },[])
 
   return (
     <>
     <ActivityIndicator visible={loading} />
-    <Screen style={styles.container}>
-        <ScrollView style={styles.scroll}>
-            {Appointments.length ? Appointments.map(Appointment => (
-              <Card 
-              key={Appointment.id}
-              id={Appointment.id}
-              image={Appointment.image}
-              name={Appointment.name}
-              email={Appointment.email}
-              disease={Appointment.disease}
-              phone_no={Appointment.contact_no}
-              navigation={navigation}
-              />
-            )) : <AppText style={styles.text}>No Appoinments Yet!</AppText>}
+      <Screen style={styles.container}>
+      <ScrollView style={styles.scroll}>
+            {
+              appointments.length ? appointments.map(Appointment => (
+                  <Card 
+                    key={Appointment.id}
+                    id={Appointment.id}
+                    image={Appointment.image}
+                    name={Appointment.name}
+                    email={Appointment.email}
+                    disease={Appointment.disease}
+                    phone_no={Appointment.contact_no}
+                    navigation={navigation}
+                  
+                  />
+              )) : <AppText style={styles.text}>No Appointment found</AppText>
+            }
         </ScrollView>
-      <TouchableOpacity
-      onPress={() => navigation.navigate('Profile')}
-      style={styles.profileButton} >
-        <AntDesign name="user" size={30} color="white"/>
-      </TouchableOpacity>
-    </Screen>
+        <TouchableOpacity
+        onPress={() => navigation.navigate('Profile')}
+        style={styles.profileButton}>
+              <AntDesign name='user'size={30} color="white" />
+        </TouchableOpacity>
+      </Screen>
+    
     </>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -85,4 +92,4 @@ const styles = StyleSheet.create({
     height:"100%",
     width:"100%"
   }
-});
+})

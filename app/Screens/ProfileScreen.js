@@ -1,94 +1,68 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-import React,{useState,useEffect} from "react";
-import Screen from "../Components/Screen";
-import ListItem from "../Components/ListItem";
-import colors from "../config/colors";
-import AppText from "../Components/AppText";
-import Divider from "../Components/Divider";
-import Icon from "../Components/Icon";
-import useAuth from "../auth/useAuth";
-import Firebase from "../config/firebase";
-
-
+import { StyleSheet, Text, View,Image} from 'react-native'
+import React from 'react'
+import Screen from '../components/Screen'
+import Divider from '../components/Divider';
+import useAuth from '../auth/useAuth';
+import AppText from '../components/AppText';
+import ListItem from '../components/ListItem';
+import colors from '../config/colors';
+import Icon from '../components/Icon';
 
 export default function ProfileScreen({navigation}) {
-  
-  const {logOut,userData} = useAuth();
-  const {email,name,id,password,Images} = userData;
-  // const {email,name} = data;
- 
-
-  const HandleDelete = async () => {
-    var user =  Firebase.auth().currentUser;
-    await user.delete().then(() => {
-      console.log('user Deleted');
-    }).catch(err => {
-      console.log(err);
-    });
-    console.log(user);  
-    // logOut();
-  }
-
-  
-
+  const {logout,userData} = useAuth();
+  const {email,name,Images} = userData;
   return (
-    <Screen>
-      <View style={styles.container}>
+   <Screen>
+     <View style={styles.container}>
         <Divider />
-        <View style={styles.profile}>
-          <View style={styles.profileLogoContainer}>
-            <Image
-              style={styles.profileLogo}
-              source={{uri : Images[0]}}
-            />
-          </View>
-          <View style={styles.profileDataContainer}>
-            <AppText>{name}</AppText>
-            <AppText>{email}</AppText>
-          </View>
+        <View style={styles.profile} >
+            <View style={styles.profileLogoContainer}>
+              <Image 
+                  style={styles.profileLogo}
+                  source={{uri : Images[0]}} 
+              />
+
+            </View>
+
+            <View style={styles.profileDataContainer}>
+              <AppText>{name}</AppText>
+              <AppText>{email}</AppText>
+            </View>
         </View>
         <Divider />
         <ListItem
-          title="Running Appointment"
+          title="Running Appointments"
           onPress={() => navigation.navigate('RunningAppointments')}
           IconComponent={
             <Icon name="account-check" backgroundColor={colors.secondary} />
           }
         />
-  
-        <Divider />
-        <ListItem
+         <Divider />
+         <ListItem
           title="Appointment History"
           onPress={() => navigation.navigate('AppointMentHistory')}
           IconComponent={
             <Icon name="history" backgroundColor={colors.medium} />
           }
         />
-        <Divider />
-        <ListItem
+         <Divider />
+         <ListItem
           title="About us"
           onPress={() => navigation.navigate('Aboutus')}
           IconComponent={<Icon name="android" backgroundColor="#01F7CC" />}
         />
-        <Divider />
-        <ListItem
-          title="Delete Hospital"
-          onPress={() => navigation.navigate('DeleteorUpdate')}
-          IconComponent={
-            <Icon name="delete" backgroundColor={colors.danger} />
-          }
-        />
-        <Divider />
+         <Divider />
         <ListItem
           title="Log Out"
-          onPress={() => logOut()}
+          onPress={() => logout()}
           IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
         />
-        <Divider />
-      </View>
-    </Screen>
-  );
+     </View>
+
+   </Screen>
+  )
 }
+
 
 const styles = StyleSheet.create({
   container: {

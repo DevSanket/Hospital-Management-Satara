@@ -1,9 +1,9 @@
-import { StyleSheet, Text, ScrollView,View } from 'react-native'
-import React,{useState,useEffect} from 'react'
-import Screen from '../Components/Screen'
-import HistoryCard from '../Components/HistoryCard'
-import useAuth from '../auth/useAuth'
-import Firebase from '../config/firebase'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import useAuth from '../auth/useAuth';
+import Firebase from '../config/firebase';
+import Screen from '../components/Screen';
+import HistoryCard from '../components/HistoryCard';
 
 export default function AppointmentHistory() {
   const {userData} = useAuth();
@@ -12,7 +12,7 @@ export default function AppointmentHistory() {
 
   //Firebase Data featch
   useEffect(() => {
-    db.collection('hospitals').doc(userData.id).collection('Appointments_History').onSnapshot(snapshot => {
+    db.collection('hospitals').doc(userData.id).collection('Appointment_History').onSnapshot(snapshot => {
         setData(snapshot.docs.map(
             doc => (
                 {
@@ -21,7 +21,7 @@ export default function AppointmentHistory() {
                 disease:doc.data().disease,
                 email:doc.data().email,
                 name:doc.data().name,
-                date: doc.data().date
+                date: String(doc.data().date)
             })))
     });
 },[]);
@@ -29,38 +29,46 @@ export default function AppointmentHistory() {
 
   return (
     <Screen>
-      <ScrollView>
-        <View style={styles.container}>
-        <Text style={styles.text}>Appointment History</Text>
-        </View>
-        {
-          Data.length ? 
-          Data.map(data => <HistoryCard
-          key={data.id}
-            name={data.name}
-            date={data.date}
-            contact_no={data.contact_no}
-            email={data.email}
-            />) :<Text style={styles.NoAppointments}>No Appointments!</Text>
-        }
-      </ScrollView>
+        <ScrollView>
+          <View style={styles.container}>
+            <Text style={styles.text}>Appointment History</Text>
+
+          </View>
+
+          {
+            
+            Data.length ? Data.map(data => {
+
+             return  <HistoryCard 
+              
+              key={data.id}
+              name={data.name}
+              date={data.date}
+              contact_no={data.contact_no}
+              email={data.email}
+
+              
+              />
+            }) : <Text style={styles.NoAppointments}>No Appointments!</Text>
+          }
+        </ScrollView>
     </Screen>
   )
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        alignItems:"center",
-        padding:10
-    },
-    text:{
-        fontSize:20,
-        textTransform:"uppercase",
-        padding:5
-    },
-    NoAppointments:{
-      textAlign:"center",
-      padding:15
-    }
+  container:{
+      flex:1,
+      alignItems:"center",
+      padding:10
+  },
+  text:{
+      fontSize:20,
+      textTransform:"uppercase",
+      padding:5
+  },
+  NoAppointments:{
+    textAlign:"center",
+    padding:15
+  }
 })

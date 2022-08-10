@@ -1,9 +1,11 @@
 import 'dotenv/config';
 
+
 export default {
-  expo: {
-    name: "Hospital Registration (Satara)",
-    slug: "hospital-registration-satara",
+
+expo: {
+    name: "Hospital Registration",
+    slug: "hospital-registration",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
